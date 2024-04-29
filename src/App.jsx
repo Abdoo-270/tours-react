@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import Tours from "./Tours";
 import Loading from "./Loading";
-
-const url = "https://course-api.com/react-tours-project";
-
+import tours from "./data";
 const App = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(tours);
   const [loading, setLoading] = useState(false);
 
   const deleteItem = (id) => {
@@ -14,21 +12,6 @@ const App = () => {
     });
     setData(newList);
   };
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(url);
-      const jsonData = await response.json();
-      setData(jsonData);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   if (loading) {
     return (
@@ -42,7 +25,7 @@ const App = () => {
       <main>
         <div className="title">
           <h2>no tours left</h2>
-          <button className="btn" onClick={() => fetchData()}>
+          <button className="btn" onClick={() => setData(tours)}>
             refresh
           </button>
         </div>
